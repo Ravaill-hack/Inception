@@ -1,7 +1,10 @@
 version: '3.8'
 
 services:
-  web:
-    image: nginx:latest
-    ports:
-      - "8080:80"
+  mariadb:
+
+  nginx:
+
+  wordpress:
+
+
