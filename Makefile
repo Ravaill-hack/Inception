@@ -19,15 +19,15 @@ all: header create_volumes build up
 
 header:
 	@echo ""
-	@echo "$(CYAN)$(BOLD)WELCOME TO INCEPTION$(END)$(END)"
+	@echo "$(CYAN)$(BOLD)WELCOME TO INCEPTION$(END)"
 	@echo ""
 
 create_volumes:
-	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)1/3:$(END) Creating volumes$(END)$(END)"
+	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)1/3: Creating volumes$(END)"
 	@echo ""
 
-	@if [ ! -d "$(DATA_PATH)" ]; then \
-		mkdir -p $(DATA_PATH)/wordpress && \
+	@if [ ! -d "$(DATA_PATH)" ] || [ ! -d "$(DATA_PATH)/wordpress" ] || [ ! -d "$(DATA_PATH)/mariadb" ]; then \
+		mkdir -p $(DATA_PATH)/wordpress; \
 		mkdir -p $(DATA_PATH)/mariadb; \
 	fi
 	@sudo chown -R $(USER):$(USER) $(DATA_PATH)/wordpress
@@ -36,38 +36,43 @@ create_volumes:
 	@sudo chmod 755 $(DATA_PATH)/mariadb
 
 	@echo "$(GREEN)Volumes successfully created ✅$(END)"
+	@echo ""
 
 build:
-	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)2/3:$(END) Building containers$(END)$(END)"
+	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)2/3: Building containers$(END)"
 	@echo ""
 
-	@docker-compose -f srcs/docker-compose.yml build && \
-	echo "$(GREEN)$(BOLD)Containers successfully built ✅$(END)$(END)" || echo "$(RED)$(BOLD)Building containers error ❌$(END)$(END)"
+	@docker compose -f srcs/docker-compose.yml build && \
+	echo "$(GREEN)$(BOLD)Containers successfully built ✅$(END)" || echo "$(RED)$(BOLD)Building containers error ❌$(END)"
+	@echo ""
 
 up:
-	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)3/3:$(END) Starting containers$(END)$(END)"
+	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)3/3: Starting containers$(END)"
 	@echo ""
 
-	@docker-compose -f srcs/docker-compose.yml up -d && \
-	echo "$(GREEN)$(BOLD)Containers successfully started ✅$(END)$(END)" || echo "$(RED)$(BOLD)Starting containers error ❌$(END)$(END)"
+	@docker compose -f srcs/docker-compose.yml up -d && \
+	echo "$(GREEN)$(BOLD)Containers successfully started ✅$(END)" || echo "$(RED)$(BOLD)Starting containers error ❌$(END)"
+	@echo ""
 
 down:
-	@echo "$(YELLOW)$(UNDERLINED)Stopping containers$(END)$(END)"
+	@echo "$(YELLOW)$(UNDERLINED)Stopping containers$(END)"
 	@echo ""
 
-	@docker-compose -f srcs/docker-compose.yml down && \
-	echo "$(GREEN)$(BOLD)Containers successfully stopped ✅$(END)$(END)" || echo "$(RED)$(BOLD)Stopping containers error ❌$(END)$(END)"
+	@docker compose -f srcs/docker-compose.yml down && \
+	echo "$(GREEN)$(BOLD)Containers successfully stopped ✅$(END)" || echo "$(RED)$(BOLD)Stopping containers error ❌$(END)"
+	@echo ""
 
 clean: down
-	@echo "🧹 $(YELLOW)$(UNDERLINED)Cleaning$(END)$(END)"
+	@echo "🧹 $(YELLOW)$(UNDERLINED)Cleaning$(END)"
 
 	@docker system prune -a -f
 
 	@echo ""
 	@echo "$(GREEN)Project cleaned ✅$(END)"
+	@echo ""
 
 fclean: clean
-	@echo "🧹 $(YELLOW)$(UNDERLINED)Deep cleaning$(END)$(END)"
+	@echo "🧹 $(YELLOW)$(UNDERLINED)Deep cleaning$(END)"
 
 	@for dir in $(VOLUMES); do \
 		sudo rm -rf $(DATA_PATH)/$$dir; \
@@ -79,6 +84,7 @@ fclean: clean
 
 	@echo ""
 	@echo "$(GREEN)Project totally cleaned ✅$(END)"
+	@echo ""
 
 re: fclean all
 
