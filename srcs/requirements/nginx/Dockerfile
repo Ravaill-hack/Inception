@@ -1,2 +1,3 @@
-FROM debian:oldstable
+FROM debian:${DEBIAN_VERSION:-bullseye-slim}
 
+EXPOSE 443

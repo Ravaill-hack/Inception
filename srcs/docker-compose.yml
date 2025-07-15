@@ -1,10 +1,35 @@
-version: '3.8'
+version: '1.29.2'
 
 services:
-  mariadb:
-
   nginx:
-
+    container_name: nginx
+    env_file:
+      - .env
+    build:
+      context: ./requirements/nginx
+    ports:
+      -"443:443"
+ 
+  mariadb:
+    container_name: mariadb
+    env_file:
+      - .env
+    build:
+      context: ./requirements/mariadb
+      args:
+        - DEBIAN_VERSION: ${DEBIAN_VERSION}
+    expose:
+      - 3306
+  
   wordpress:
+    container_name: wordpress
+    env_file:
+      - .env
+    build:
+      context: ./requirements/wordpress
+    depends_on:
+      - mariadb
+    expose:
+      - 9000
 
 

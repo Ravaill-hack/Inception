@@ -15,41 +15,38 @@ END = \033[0m
 DATA_PATH = $(HOME)/lmatkows/data
 VOLUMES = mariadb wordpress
 
+COMPOSE = docker-compose -f
+YML_FILE = srcs/docker-compose.yml
+
 all: header create_volumes build up
 
 header:
 	@echo ""
-	@echo "$(CYAN)$(BOLD)WELCOME TO INCEPTION$(END)"
-
-	@echo "        @    @             @     @      "
-	@echo "      @     @               @           "
-	@echo "     @     @      @@@@@@     @     @    "
-	@echo "          @     @@      @@    @     @   "
-	@echo "     @   @    @@          @@   @        "                                      
-	@echo "    @   @    @             @    @    @  "
-	@echo "        @       @@@@@@@@@@              "
-	@echo "   @   @     @@            @@           "
-	@echo "       @   @      @@@@@@@     @         "
-	@echo "   @      @    @@         @@    @       "
-	@echo "   @  @  @    @    @@@@@    @@   @      "
-	@echo "      @  @   @    @      @    @   @     "
-	@echo "   @  @  @   @   @    @   @   @   @     "
-	@echo "         @   @    @   @   @   @   @     "
-	@echo "   @  @  @    @    @@@    @   @   @     "
-	@echo "   @   @  @    @         @   @    @     "
-	@echo "       @   @     @@@@@@@    @    @      "
-	@echo "   @   @     @@           @@    @       "
-	@echo "        @       @@@@@@@@@     @         "
-	@echo "          @@@              @@           "
-	@echo "              @@@@@@@@@@@@              "
+	@echo "$(CYAN)$(BOLD)                          "
 	@echo "                                        "
-	@echo "                                        "
+	@echo "             @@@@@@@@@@@@@@@            "                                      
+	@echo "          @@                 @@         "
+	@echo "         @      @@@@@@@@@@      @       "
+	@echo "       @     @@            @@     @     "
+	@echo "      @    @      @@@@@@@     @     @   "
+	@echo "     @    @    @@         @@    @    @  "
+	@echo "    @    @    @     @@@@    @@   @    @ "
+	@echo "    @    @   @    @      @    @   @   @ "
+	@echo "    @    @   @   @    @   @   @   @    @"
+	@echo "    @    @   @   @     @  @   @   @    @"
+	@echo "    @    @    @    @@@    @   @   @    @"
+	@echo "     @    @    @         @   @    @   @ "
+	@echo "      @    @     @@@@@@@    @    @    @ "
+	@echo "  @    @     @@           @@    @    @  "
+	@echo "   @     @      @@@@@@@@@     @     @   "
+	@echo "    @      @@@             @@      @    "
+	@echo "      @        @@@@@@@@@@@       @      "
+	@echo "        @@@                   @@        "
+	@echo "            @@@@@@@@@@@@@@@@@           "
 	@echo "                                        "
 	@echo "                                        " 
+	@echo "         WELCOME TO INCEPTION$(END)     " 
 	@echo "                                        " 
-	@echo "                                        " 
-	@echo "                                        " 
-
 
 create_volumes:
 	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)1/3: Creating volumes$(END)"
@@ -71,7 +68,7 @@ build:
 	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)2/3: Building containers$(END)"
 	@echo ""
 
-	@docker compose -f srcs/docker-compose.yml build && \
+	@$(COMPOSE) $(YML_FILE) build && \
 	echo "$(GREEN)$(BOLD)Containers successfully built ✅$(END)" || echo "$(RED)$(BOLD)Building containers error ❌$(END)"
 	@echo ""
 
@@ -79,7 +76,7 @@ up:
 	@echo "$(YELLOW)$(UNDERLINED)$(BOLD)3/3: Starting containers$(END)"
 	@echo ""
 
-	@docker compose -f srcs/docker-compose.yml up -d && \
+	@$(COMPOSE) $(YML_FILE) up -d && \
 	echo "$(GREEN)$(BOLD)Containers successfully started ✅$(END)" || echo "$(RED)$(BOLD)Starting containers error ❌$(END)"
 	@echo ""
 
@@ -87,7 +84,7 @@ down:
 	@echo "$(YELLOW)$(UNDERLINED)Stopping containers$(END)"
 	@echo ""
 
-	@docker compose -f srcs/docker-compose.yml down && \
+	@$(COMPOSE) $(YML_FILE) down && \
 	echo "$(GREEN)$(BOLD)Containers successfully stopped ✅$(END)" || echo "$(RED)$(BOLD)Stopping containers error ❌$(END)"
 	@echo ""
 
