@@ -1,1 +1,1 @@
-FROM debian:oldstable
+FROM debian:bullseye-slim
