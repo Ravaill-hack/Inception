@@ -58,12 +58,12 @@ volumes:
     driver_opts:
       type: "none"
       o: "bind"
-      device: "/home/lmatkows/data/wordpress"
+      device: "/home/lubuntu/data/wordpress"
   mariadb:
     driver: local
     driver_opts:
       type: "none"
       o: "bind"
-      device: "/home/lmatkows/data/mariadb"
+      device: "/home/lubuntu/data/mariadb"
 
 

@@ -12,7 +12,7 @@ BOLD = \033[1m
 
 END = \033[0m
 
-DATA_PATH = $(HOME)/lmatkows/data
+DATA_PATH = $(HOME)/data
 VOLUMES = mariadb wordpress
 
 COMPOSE = docker-compose -f
