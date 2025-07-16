@@ -1,9 +1,19 @@
 #!/bin/bash
 
-mysqld safe &
-sleep 10
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    echo "Database initialization..."
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql --skip-test-db
+fi
 
-mariadb -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DB}`"
+echo "Temporary launch of MariaDB in safe mode for configuration..."
+mysqld_safe --datadir=/var/lib/mysql --skip-networking &
+pid="$!"
+
+until mysqladmin ping --silent; do
+    sleep 1
+done
+
+mariadb -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DB}\`;"
 
 mariadb -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
 
