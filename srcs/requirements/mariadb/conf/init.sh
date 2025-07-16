@@ -1,17 +1,7 @@
 #!/bin/bash
 
-if [ ! -d "/var/lib/mysql/mysql" ]; then
-    echo "Database initialization..."
-    mysql_install_db --user=mysql --datadir=/var/lib/mysql --skip-test-db
-fi
-
-echo "Temporary launch of MariaDB in safe mode for configuration..."
-mysqld_safe --datadir=/var/lib/mysql --skip-networking &
-pid="$!"
-
-until mysqladmin ping --silent; do
-    sleep 1
-done
+mysqld_safe &
+sleep 10
 
 mariadb -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DB}\`;"
 
