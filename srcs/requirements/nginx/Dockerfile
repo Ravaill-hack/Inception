@@ -17,7 +17,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     cp ${SSL_KEY} /etc/nginx/ssl/nginx-selfsigned.key && \
     cp ${SSL_CERT} /etc/nginx/ssl/nginx-selfsigned.crt
 
-COPY conf/nginx.conf.template /etc/nginx/nginx.conf.template
+COPY conf/nginx.conf /etc/nginx/nginx.conf.template
 
 RUN envsubst '${SSL_CERT} ${SSL_KEY}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
