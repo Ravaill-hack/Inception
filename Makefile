@@ -15,7 +15,7 @@ END = \033[0m
 DATA_PATH = $(HOME)/data
 VOLUMES = mariadb wordpress
 
-COMPOSE = docker-compose -f
+COMPOSE = docker compose -f
 YML_FILE = srcs/docker-compose.yml
 
 all: header create_volumes build up
