@@ -5,7 +5,7 @@ services:
       - .env
     build:
       context: ./requirements/nginx
-    image: nginx:custom
+    image: nginx:inception
     volumes:
       - wordpress:/var/www/wordpress
     depends_on:
@@ -22,7 +22,7 @@ services:
       - .env
     build:
       context: ./requirements/mariadb
-    image: mariadb:custom
+    image: mariadb:inception
     volumes:
       - mariadb:/var/lib/mysql
     expose:
@@ -37,7 +37,7 @@ services:
       - .env
     build:
       context: ./requirements/wordpress
-    image: wordpress:custom
+    image: wordpress:inception
     volumes:
       - wordpress:/var/www/wordpress
     depends_on:

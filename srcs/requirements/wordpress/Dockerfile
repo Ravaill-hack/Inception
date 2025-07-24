@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim
 
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
 						wget \
 						curl \
 						php7.4 \
@@ -29,4 +29,4 @@ RUN chmod +x /setup.sh
 
 WORKDIR /var/www/wordpress
 
-ENTRYPOINT ["/init.sh"]
+ENTRYPOINT ["/setup.sh"]
