@@ -18,4 +18,4 @@ RUN chmod +x /init.sh
 
 EXPOSE 3306
 
-ENTRYPOINT ["bash", "/init.sh"]
+ENTRYPOINT ["/bin/sh", "/init.sh"]
