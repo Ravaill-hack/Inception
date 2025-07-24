@@ -8,3 +8,35 @@ echo "Launching database"
 echo "   -user: $MYSQL_USER"
 echo "   -database: $MYSQL_DATABASE"
 echo "   -host: $MYSQL_HOST"
+echo ""
+
+if [ ! -f wp-config.php ]; then
+	echo "Setting up Wordpress..."
+	wp config create \
+		--dbname="$MYSQL_DATABASE" \
+		--dbuser="$MYSQL_USER" \
+		--dbpass="$MYSQL_PASSWORD" \
+		--dbhost=mariadb \
+		--path=/var/www/wordpress \
+		--allow-root
+
+	wp core install \
+		--url="$DOMAIN_NAME" \
+		--title="Inception" \
+		--admin_user="$WORDPRESS_ADMIN" \
+		--admin_password="$WORDPRESS_ADMIN_PASSWORD" \
+		--admin_email="$WORDPRESS_ADMIN_EMAIL" \
+		--skip-email \
+		--allow-root
+
+	wp user create "$WORDPRESS_USER" "$WORDPRESS_USER_EMAIL" \
+		--role=author \
+		--user_pass="$WORDPRESS_USER_PASSWORD" \
+		--allow-root
+
+	echo "Wordpress succesfully set up"
+
+fi
+
+echo "Launching Wordpress..."
+exec /usr/sbin/php-fpm7.4 -F
