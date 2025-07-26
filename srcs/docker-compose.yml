@@ -14,6 +14,9 @@ services:
       - inception
     ports:
       - "443:443"
+      - "80:443"
+    expose:
+      - 443
     restart: unless-stopped
  
   mariadb:
@@ -50,16 +53,19 @@ services:
 
 networks:
   inception:
+    name: inception
     driver: bridge
 
 volumes:
   wordpress:
+    name: wordpress
     driver: local
     driver_opts:
       type: "none"
       o: "bind"
       device: "/home/lmatkows/data/wordpress"
   mariadb:
+    name: mariadb
     driver: local
     driver_opts:
       type: "none"
